@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div id="myform">
+    <label>Имя</label>
+    <br />
+    <input id="inputFirstName" type="text" class="form-control" />
+    <br />
+    <label>Фамилия</label>
+    <br />
+    <input id="inputLastName" type="text" class="form-control" />
+    <br />
+    <label>Город проживания</label>
+    <br />
+    <input type="text" class="form-control" />
+    <br />
+    <label>Номер телефона</label>
+    <br />
+    <input id="inputPhoneNumber" type="text" class="form-control" />
+    <br />
+    <label>Email</label>
+    <br />
+    <input type="text" class="form-control" />
+    <br />
+    <button class="btn btn-primary" id="sendButton" type="submit">Отправить</button>
+</div>
+<div id="loading" data-ajax="true" style="display:none"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i> Обработка данных...</div>
+<div id="message"></div>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.1.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    function onSendButtonClick() {
+        var myform = $("#myform");
+        var loading = $("#loading");
+        var message = $("#message");
+        var firstName = $("#inputFirstName").val();
+        var lastName = $("#inputLastName").val();
+        var phoneNumber = $("#inputPhoneNumber").val();
+
+        myform.hide();
+        loading.show();
+        message.empty();
+
+        $.ajax({
+            url: "/Home/Validate",
+            type: "POST",
+            data: {
+                firstName: firstName,
+                lastName: lastName,
+                phoneNumber: phoneNumber
+            },
+            success: function (data) {
+                loading.hide();
+                message.append(data.message);
+                if (data.isValid == false) {
+                    myform.show();
+                }
+            }
+        });
+    }
+
+    $("#sendButton").on("click", onSendButtonClick)
+</script>
