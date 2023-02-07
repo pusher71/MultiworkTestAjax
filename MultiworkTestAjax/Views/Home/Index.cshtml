@@ -34,7 +34,7 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
 <script>
-    function onSendButtonClick() {
+    $("#sendButton").on("click", function onSendButtonClick() {
         var myform = $("#myform");
         var loading = $("#loading");
         var message = $("#message");
@@ -62,7 +62,5 @@
                 }
             }
         });
-    }
-
-    $("#sendButton").on("click", onSendButtonClick)
+    });
 </script>
